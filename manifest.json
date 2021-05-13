@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+   
+    "name": "News Evaluator",
+    "version": "0.1.0",
+    "description": "This tool will evaluates news websites and points you to the news that most fits your language learning goal.",
+   
+    "content_scripts": [{
+      "css": ["styles.css"],
+      "js": ["content.js"],
+      "matches": ["https://5minutes.rtl.lu/*"]
+    }]
+   
+  }
