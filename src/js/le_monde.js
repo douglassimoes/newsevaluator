@@ -28,41 +28,46 @@ function article_http_request(link){
 
 }
 
-console.log("NewsEvaluator starting for LeMonde...");
-var slice = Array.prototype.slice;
-var cards_wrapper = document.getElementsByClassName('article__media');
-var secondary_content = slice.call(document.getElementsByClassName('article article--runner old__article-runner'));
-var river_content = slice.call(document.getElementsByClassName('article article--river old__article-river'));
-var main_content = slice.call(document.getElementsByClassName('article article--main'));
+chrome.runtime.onMessage.addListener(gotMessage);
 
-var cards_content = main_content.concat(secondary_content,river_content);
+function gotMessage(message,sender,sendResponse){
+    console.log("NewsEvaluator starting for LeMonde...");
+    var slice = Array.prototype.slice;
+    var cards_wrapper = document.getElementsByClassName('article__media');
+    var secondary_content = slice.call(document.getElementsByClassName('article article--runner old__article-runner'));
+    var river_content = slice.call(document.getElementsByClassName('article article--river old__article-river'));
+    var main_content = slice.call(document.getElementsByClassName('article article--main'));
 
-var star_size = "24px";
-var star_icon_address = "https://img.icons8.com/fluent/96/000000/star.png";
-for (var i = 0; i < cards_wrapper.length; i++) {
-    
-    var first_star = create_star();
-    var second_star = create_star();
-    var third_star = create_star();
-    var fourth_star = create_star();
-    var fifth_star = create_star();
-    
-    second_star.style.marginLeft = star_size;
-    third_star.style.marginLeft = 2*parseInt(star_size,10)+"px";
-    fourth_star.style.marginLeft = 3*parseInt(star_size,10)+"px";
-    fifth_star.style.marginLeft = 4*parseInt(star_size,10)+"px";
+    var cards_content = main_content.concat(secondary_content,river_content);
 
-    var div_image = cards_wrapper[i];
-    var div_content = cards_content[i];
+    var star_size = "24px";
+    var star_icon_address = "https://img.icons8.com/fluent/96/000000/star.png";
+    for (var i = 0; i < cards_wrapper.length; i++) {
+        
+        var first_star = create_star();
+        var second_star = create_star();
+        var third_star = create_star();
+        var fourth_star = create_star();
+        var fifth_star = create_star();
+        
+        second_star.style.marginLeft = star_size;
+        third_star.style.marginLeft = 2*parseInt(star_size,10)+"px";
+        fourth_star.style.marginLeft = 3*parseInt(star_size,10)+"px";
+        fifth_star.style.marginLeft = 4*parseInt(star_size,10)+"px";
 
-    div_image.appendChild(first_star);
-    div_image.appendChild(second_star);
-    div_image.appendChild(third_star);
-    div_image.appendChild(fourth_star);
-    div_image.appendChild(fifth_star);
+        var div_image = cards_wrapper[i];
+        var div_content = cards_content[i];
 
-    if(div_content != null){
-        article_http_request(div_content.firstElementChild.href);
+        div_image.appendChild(first_star);
+        div_image.appendChild(second_star);
+        div_image.appendChild(third_star);
+        div_image.appendChild(fourth_star);
+        div_image.appendChild(fifth_star);
+
+        if(div_content != null){
+            article_http_request(div_content.firstElementChild.href);
+        }
     }
 }
+
 

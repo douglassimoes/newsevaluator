@@ -16,6 +16,10 @@
     },{ "css": ["css/styles.css"],
     "js": ["js/le_monde.js"],
     "matches": ["https://www.lemonde.fr/*"]
-  }]
+  }],
+  "browser_action":{
+    "default_icon" : "images/extension_icon.png",
+    "default_popup": "html/popup.html"
+  }
    
   }
