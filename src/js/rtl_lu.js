@@ -19,6 +19,7 @@ function article_http_request(link){
 
 }
 
+console.log("NewsEvaluator starting for RTL.lu...");
 var cards_wrapper = document.getElementsByClassName('card__media-wrapper');
 var cards_content = document.getElementsByClassName('card__content');
 var star_size = "24px";

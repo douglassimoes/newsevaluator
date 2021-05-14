@@ -4,11 +4,18 @@
     "name": "News Evaluator",
     "version": "0.1.0",
     "description": "This tool will evaluates news websites and points you to the news that most fits your language learning goal.",
+
+    "background": {
+      "page": "html/background.html"
+  },
    
     "content_scripts": [{
-      "css": ["styles.css"],
-      "js": ["content.js"],
+      "css": ["css/styles.css"],
+      "js": ["js/rtl_lu.js"],
       "matches": ["https://5minutes.rtl.lu/*"]
-    }]
+    },{ "css": ["css/styles.css"],
+    "js": ["js/le_monde.js"],
+    "matches": ["https://www.lemonde.fr/*"]
+  }]
    
   }
