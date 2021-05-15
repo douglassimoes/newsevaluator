@@ -47,3 +47,27 @@ wordsFileChooser.addEventListener("change", function(){
 
 });
 
+var dictionaryFileChooser = document.getElementById("myDict");
+var languageCombobox = document.getElementById("languages");
+dictionaryFileChooser.addEventListener("change", function(){
+
+    // Get a reference to the fileList
+    var files = !!this.files ? this.files : [];
+
+    // If no files were selected, or no FileReader support, return
+    if ( !files.length || !window.FileReader ) return;
+
+    // Create a new instance of the FileReader
+    var reader = new FileReader();
+
+    reader.readAsDataURL(files[0]);
+
+    reader.onloadend = function(){       
+        const key = 'dict_'+ languageCombobox.value;
+        const json = this.result.substring(29);
+        const text_result = b64DecodeUnicode(json);
+        localStorage.setItem(key,text_result);
+    }
+
+});
+
