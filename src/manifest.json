@@ -4,7 +4,11 @@
     "name": "News Evaluator",
     "version": "0.1.0",
     "description": "This tool will evaluates news websites and points you to the news that most fits your language learning goal.",
-
+    
+    "permissions": [
+      "tabs",
+      "storage"  
+  ],
     "background": {
       "page": "html/background.html"
   },
