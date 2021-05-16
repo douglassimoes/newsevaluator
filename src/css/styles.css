@@ -4,3 +4,7 @@
     left: 0;
     border: 1px red solid;
   }
+
+  span:hover {
+    background-color: blue;
+  }

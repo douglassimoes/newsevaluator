@@ -96,10 +96,17 @@ function scrape_article_http_request(cards_overlay,div_content,div_image,message
 
 }
 
-console.log("NewsEvaluator starting for RTL.lu...");
+function add_span_to_words_html(words){
+    var html_result = "";
+    for (var i = 0; i < words.length; i++) {
+        html_result = html_result + "<span class=wordraw>"+words[i]+" <span/>";
+    }
+    return html_result;
+}
 
-function gotMessage(message,sender,sendResponse){
-    console.log("Message Received...");
+
+function rank_news(message){
+    console.log("Rank Message Received...");
     // console.log(message);
     var cards_wrapper = document.getElementsByClassName('card__media-wrapper');
     var cards_content = document.getElementsByClassName('card__content');
@@ -112,6 +119,32 @@ function gotMessage(message,sender,sendResponse){
         if(div_content != null){
             var article = scrape_article_http_request(cards_overlay[i],div_content,div_image,message);
         }
-    }};
+    }
+};
+
+function parse_article(message){
+    console.log("Parse Message Received...");
+    // console.log(message);
+
+    var div_paragraphs = document.getElementsByClassName('article-body__detail js-article-body-detail');
+     if (div_paragraphs[0].children != null){
+        for(var i=0; i < N_PARAGRAPHS_TO_EVALUATE; i++){
+            var p = div_paragraphs[0].children[i];
+            var words_splitted = p.innerText.split(" ");
+            p.innerHTML = add_span_to_words_html(words_splitted);
+        }
+     }
+}
+
+console.log("NewsEvaluator starting for RTL.lu...");
+
+function gotMessage(message,sender,sendResponse){
+    if(message.action == "rank"){
+        rank_news(message);
+    }else if(message.action == "parse"){
+        parse_article(message);
+    }
+    
+};
     
 chrome.runtime.onMessage.addListener(gotMessage);
