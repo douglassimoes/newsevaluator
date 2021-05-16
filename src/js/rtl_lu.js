@@ -1,5 +1,5 @@
 
-const N_PARAGRAPHS_TO_EVALUATE = 1;
+const N_PARAGRAPHS_TO_EVALUATE = 2;
 
 function create_star(){
     var star_size = "24px";
@@ -60,25 +60,25 @@ function check_text_against_known_words(article_text,known_words){
     }
 
     var article_percent_known = (article_known_words*100)/article_words.length;
-    console.log("article_percent_known: "+article_known_words.toString() + "::"+ article_words.length.toString()+" result: "+article_percent_known.toString());
-    return article_percent_known;
+    // console.log("article_percent_known: "+article_known_words.toString() + "::"+ article_words.length.toString()+" result: "+article_percent_known.toString());
+    return article_percent_known.toFixed(2);
 }
 
 function scrape_article(site_content){
     var textContent = "";
 
-    var paragraphs = site_content.getElementsByClassName('article-body__detail js-article-body-detail');
-     if (paragraphs[0].firstElementChild != null){
+    var div_paragraphs = site_content.getElementsByClassName('article-body__detail js-article-body-detail');
+     if (div_paragraphs[0].children != null){
         for(var i=0; i < N_PARAGRAPHS_TO_EVALUATE; i++){
-            textContent = textContent + " "+ paragraphs[i].firstElementChild.textContent;
+            textContent = textContent + " "+ div_paragraphs[0].children[i].innerText;
         }
         return textContent;
      }
 }
 
-function article_http_request(link,div_image,message){
+function scrape_article_http_request(cards_overlay,div_content,div_image,message){
     var xhttp = new XMLHttpRequest();
-    xhttp.open('GET', link, true);
+    xhttp.open('GET', div_content.firstElementChild.href, true);
     xhttp.send();
 
     xhttp.onreadystatechange = function(e) {
@@ -89,6 +89,7 @@ function article_http_request(link,div_image,message){
             console.log("Article scraped!");
             var rank = check_text_against_known_words(article_text,message.known_words);
             console.log("Rank: "+rank.toString());
+            cards_overlay.title = rank+"% known words";
             star_based_on_rank(div_image,rank);
         }
     }
@@ -99,16 +100,17 @@ console.log("NewsEvaluator starting for RTL.lu...");
 
 function gotMessage(message,sender,sendResponse){
     console.log("Message Received...");
-    console.log(message);
+    // console.log(message);
     var cards_wrapper = document.getElementsByClassName('card__media-wrapper');
     var cards_content = document.getElementsByClassName('card__content');
+    var cards_overlay = document.getElementsByClassName('block-link__overlay');
     
     for (var i = 0; i < cards_wrapper.length; i++) {
         var div_image = cards_wrapper[i].querySelector(".media-image__container");
         var div_content = cards_content[i].querySelector(".card___mtitle");
     
         if(div_content != null){
-            var article = article_http_request(div_content.firstElementChild.href,div_image,message);
+            var article = scrape_article_http_request(cards_overlay[i],div_content,div_image,message);
         }
     }};
     
