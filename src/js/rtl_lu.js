@@ -1,5 +1,5 @@
 
-const N_PARAGRAPHS_TO_EVALUATE = 2;
+const N_PARAGRAPHS_TO_EVALUATE = 4;
 
 function create_star(){
     var star_size = "24px";
@@ -96,12 +96,15 @@ function scrape_article_http_request(cards_overlay,div_content,div_image,message
 
 }
 
-function add_span_to_words_html(words){
+function add_span_to_words_html(p,words){
     var html_result = "";
+    p.innerText = "";
     for (var i = 0; i < words.length; i++) {
-        html_result = html_result + "<span class=wordraw>"+words[i]+" <span/>";
+        var span = document.createElement('span');
+        span.id = "word-"+i.toString();
+        span.textContent = words[i]+" ";    
+        p.appendChild(span);
     }
-    return html_result;
 }
 
 
@@ -131,7 +134,7 @@ function parse_article(message){
         for(var i=0; i < N_PARAGRAPHS_TO_EVALUATE; i++){
             var p = div_paragraphs[0].children[i];
             var words_splitted = p.innerText.split(" ");
-            p.innerHTML = add_span_to_words_html(words_splitted);
+            add_span_to_words_html(p,words_splitted);
         }
      }
 }
