@@ -54,7 +54,7 @@ function check_text_against_known_words(article_text,known_words){
 
     var article_known_words = 0;
     for(var i=0; i < article_words.length; i++){
-            if(known_words.includes(article_words[i])){
+            if(known_words.includes(article_words[i].toLowerCase())){
                 article_known_words++;
             }  
     }
