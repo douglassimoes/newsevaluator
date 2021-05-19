@@ -47,9 +47,9 @@ wordsFileChooser.addEventListener("change", function(){
 
 });
 
-var dictionaryFileChooser = document.getElementById("myDict");
+var frequencyDictionaryFileChooser = document.getElementById("myFrequencyDict");
 var languageCombobox = document.getElementById("languages");
-dictionaryFileChooser.addEventListener("change", function(){
+frequencyDictionaryFileChooser.addEventListener("change", function(){
 
     // Get a reference to the fileList
     var files = !!this.files ? this.files : [];
@@ -63,9 +63,35 @@ dictionaryFileChooser.addEventListener("change", function(){
     reader.readAsDataURL(files[0]);
 
     reader.onloadend = function(){       
-        const key = 'dict_'+ languageCombobox.value;
+        const key = 'frequency_dict_'+ languageCombobox.value;
         const json = this.result.substring(29);
         const text_result = b64DecodeUnicode(json);
+        localStorage.setItem(key,text_result);
+    }
+
+});
+
+var dictionaryFileChooser = document.getElementById("myDict");
+var languageTranslationsCombobox = document.getElementById("translations");
+dictionaryFileChooser.addEventListener("change", function(){
+
+    // Get a reference to the fileList
+    var files = !!this.files ? this.files : [];
+
+    // If no files were selected, or no FileReader support, return
+    if ( !files.length || !window.FileReader ) return;
+
+    // Create a new instance of the FileReader
+    var reader = new FileReader();
+
+    reader.readAsDataURL(files[0]);
+    console.log(files[0]);
+
+    reader.onloadend = function(){       
+        const key = 'dict_'+ languageTranslationsCombobox.value;
+        const json = this.result.substring(29);
+        const text_result = b64DecodeUnicode(json);
+        console.log(text_result);
         localStorage.setItem(key,text_result);
     }
 

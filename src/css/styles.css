@@ -5,6 +5,14 @@
     border: 1px red solid;
   }
 
-  span:hover {
+  span.unknownword {
     background-color: #35d4fc;
+  }
+
+  span.knownword {
+    background-color: white;
+  }
+
+  span.learningword:hover {
+    background-color: #f5f76d;
   }

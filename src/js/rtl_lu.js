@@ -96,14 +96,21 @@ function scrape_article_http_request(cards_overlay,div_content,div_image,message
 
 }
 
-function add_span_to_words_html(p,words){
+function add_span_to_words_html(p,words,known_words,dict){
     var html_result = "";
     p.innerText = "";
     for (var i = 0; i < words.length; i++) {
         var span = document.createElement('span');
         span.id = "word-"+i.toString();
-        span.textContent = words[i]+" ";    
+        span.textContent = words[i];
+        if(known_words.includes(words[i])){
+            span.className = "knownword";   
+        }else{
+            span.className = "unknownword";
+            span.title = "here";
+        }     
         p.appendChild(span);
+        p.innerHTML = p.innerHTML + " ";
     }
 }
 
@@ -134,12 +141,29 @@ function parse_article(message){
         for(var i=0; i < N_PARAGRAPHS_TO_EVALUATE; i++){
             var p = div_paragraphs[0].children[i];
             var words_splitted = p.innerText.split(" ");
-            add_span_to_words_html(p,words_splitted);
+            add_span_to_words_html(p,words_splitted,message.known_words,message.dict);
         }
      }
 }
 
 console.log("NewsEvaluator starting for RTL.lu...");
+
+function markWordAsKnown(){
+    var unknownword = document.querySelector(".unknownword:hover");
+    console.log(unknownword.textContent);
+    if(unknownword.className == "unknownword"){
+        console.log("unknown grabbed!");
+        unknownword.className = "knownword";
+    }else{
+        console.log("known grabbed!");
+    }
+}
+
+document.addEventListener('keydown', function(e){
+    if(e.key == "k"){
+        markWordAsKnown();
+    }
+});
 
 function gotMessage(message,sender,sendResponse){
     if(message.action == "rank"){
