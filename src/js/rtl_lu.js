@@ -163,7 +163,7 @@ function markWordAsKnown(){
     console.log(unknownword.textContent);
     if(unknownword.className == "unknownword"){
         console.log("unknown grabbed!");
-        auxKnownWords = "[[\""+unknownword.textContent.trim().toLowerCase()+"\", 2]" + auxKnownWords.substring(1,auxKnownWords.length);
+        auxKnownWords = "[[\""+unknownword.textContent.trim().toLowerCase()+"\", 2]," + auxKnownWords.substring(1,auxKnownWords.length);
         unknownword.className = "knownword";
         updateKnownWords(auxKnownWords);
     }else{
