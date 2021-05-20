@@ -132,6 +132,7 @@ function rank_news(message){
     }
 };
 
+var auxKnownWords = "";
 function parse_article(message){
     console.log("Parse Message Received...");
     // console.log(message);
@@ -142,18 +143,29 @@ function parse_article(message){
             var p = div_paragraphs[0].children[i];
             var words_splitted = p.innerText.split(" ");
             add_span_to_words_html(p,words_splitted,message.known_words,message.dict);
+            auxKnownWords = message.known_words;
         }
      }
 }
 
 console.log("NewsEvaluator starting for RTL.lu...");
 
+function updateKnownWords(newKnownWords){
+    var msg = {
+        action : "update",
+        known_words: newKnownWords
+    }
+    chrome.runtime.sendMessage(msg);
+}
+
 function markWordAsKnown(){
     var unknownword = document.querySelector(".unknownword:hover");
     console.log(unknownword.textContent);
     if(unknownword.className == "unknownword"){
         console.log("unknown grabbed!");
+        auxKnownWords = "[[\""+unknownword.textContent.trim().toLowerCase()+"\", 2]" + auxKnownWords.substring(1,auxKnownWords.length);
         unknownword.className = "knownword";
+        updateKnownWords(auxKnownWords);
     }else{
         console.log("known grabbed!");
     }

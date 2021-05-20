@@ -4,13 +4,15 @@ console.log("Starting background script..");
 
 chrome.browserAction.onClicked.addListener(settingsClicked);
 
-function buttonClicked(tab){
-    let msg = {
-        knownWords : ["test","Bonjour"]
-    } 
-
-    chrome.tabs.sendMessage(tab.id, msg);
-}
+chrome.runtime.onMessage.addListener(function(request,sender){
+    if(request.action == "update"){
+        const backup_key = "backup_words";
+        var backup_known_words = " "+ localStorage.getItem("my_words").repeat(1);
+        backup_known_words = backup_known_words.slice(1);
+        localStorage.setItem(backup_key,backup_known_words);
+        localStorage.setItem("my_words",request.known_words);
+    }
+});
 
 export function settingsClicked(){
     chrome.tabs.create({url: chrome.extension.getURL('background.html')});
