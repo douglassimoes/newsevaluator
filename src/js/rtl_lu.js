@@ -103,7 +103,18 @@ function add_span_to_words_html(p,words,known_words,dict){
         var span = document.createElement('span');
         span.id = "word-"+i.toString();
         span.textContent = words[i];
-        if(known_words.includes(words[i])){
+        var endRegex = /\'$|\.$|\!$|\?$|\"$/g; // special characters
+        var startRegex = /^\'|^\.|^\!|^\?|^\"/g;
+        var raw_word = words[i].toLowerCase();
+        if(words[i].toLowerCase().search(startRegex) != -1){
+            raw_word = words[i].toLowerCase().substring(1,words[i].length);
+            console.log(raw_word);
+        }
+        if(words[i].toLowerCase().search(endRegex) != -1){
+            raw_word = words[i].toLowerCase().substring(0,words[i].length-1);
+            console.log(raw_word);
+        } 
+        if(known_words.includes(raw_word)){
             span.className = "knownword";   
         }else{
             span.className = "unknownword";
