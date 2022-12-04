@@ -5,7 +5,21 @@ console.log("Starting background script..");
 chrome.browserAction.onClicked.addListener(settingsClicked);
 
 chrome.runtime.onMessage.addListener(function(request,sender){
-    if(request.action == "update"){
+    if(request.action == "update_recognized"){
+        const backup_key = "backup_words";
+        var backup_known_words = " "+ localStorage.getItem("my_words").repeat(1);
+        backup_known_words = backup_known_words.slice(1);
+        localStorage.setItem(backup_key,backup_known_words);
+        localStorage.setItem("my_words",request.known_words);
+    }
+    if(request.action == "update_familiar"){
+        const backup_key = "backup_words";
+        var backup_known_words = " "+ localStorage.getItem("my_words").repeat(1);
+        backup_known_words = backup_known_words.slice(1);
+        localStorage.setItem(backup_key,backup_known_words);
+        localStorage.setItem("my_words",request.known_words);
+    }
+    if(request.action == "update_known"){
         const backup_key = "backup_words";
         var backup_known_words = " "+ localStorage.getItem("my_words").repeat(1);
         backup_known_words = backup_known_words.slice(1);

@@ -13,6 +13,10 @@
     background-color: white;
   }
 
-  span.learningword {
+  span.recognizedword {
     background-color: #f5f76d;
+  }
+
+  span.familiarword {
+    background-color: #6df76d;
   }

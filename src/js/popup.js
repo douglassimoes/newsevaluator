@@ -31,11 +31,18 @@ function parseClicked(){
     });
 }
 
+function helpClicked(){
+    alert("1. Go to rtl.lu website; \n2. Click Parse button; \n3. The unkwown words will be in blue; \n\n\nInstructions:\n To mark words as recognized press 'q' \n To mark words as familiar press 'w' \n To mark words as learned press 'e' ");
+}
+
+
 window.onload = function(){
     var settings = document.getElementById('settings');
     var rank = document.getElementById('rank');
     var parse = document.getElementById('parse');
+    var help = document.getElementById('help');
     settings.addEventListener('click', settingsClicked);
     rank.addEventListener('click', rankClicked);
     parse.addEventListener('click', parseClicked);
+    help.addEventListener('click',helpClicked);
 }

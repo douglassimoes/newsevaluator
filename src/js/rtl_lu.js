@@ -191,54 +191,12 @@ function parse_article(message){
 
 console.log("NewsEvaluator starting for RTL.lu...");
 
-function updateRecognizedWords(newKnownWords){
-    var msg = {
-        action : "update_recognized",
-        recognized_words: newKnownWords
-    }
-    chrome.runtime.sendMessage(msg);
-}
-
-function updateFamiliarWords(newKnownWords){
-    var msg = {
-        action : "update_familiar",
-        familiar_words: newKnownWords
-    }
-    chrome.runtime.sendMessage(msg);
-}
-
 function updateKnownWords(newKnownWords){
     var msg = {
-        action : "update_known",
+        action : "update",
         known_words: newKnownWords
     }
     chrome.runtime.sendMessage(msg);
-}
-
-function markWordAsRecognized(){
-    var unknownword = document.querySelector(".unknownword:hover");
-    console.log(unknownword.textContent);
-    if(unknownword.className == "unknownword"){
-        console.log("unknown grabbed!");
-        auxKnownWords = "[[\""+unknownword.textContent.trim().toLowerCase()+"\", 2]," + auxKnownWords.substring(1,auxKnownWords.length);
-        unknownword.className = "recognizedword";
-        updateRecognizedWords(auxKnownWords);
-    }else{
-        console.log("known grabbed!");
-    }
-}
-
-function markWordAsFamiliar(){
-    var unknownword = document.querySelector(".unknownword:hover");
-    console.log(unknownword.textContent);
-    if(unknownword.className == "unknownword"){
-        console.log("unknown grabbed!");
-        auxKnownWords = "[[\""+unknownword.textContent.trim().toLowerCase()+"\", 2]," + auxKnownWords.substring(1,auxKnownWords.length);
-        unknownword.className = "familiarword";
-        updateFamiliarWords(auxKnownWords);
-    }else{
-        console.log("known grabbed!");
-    }
 }
 
 function markWordAsKnown(){
@@ -255,13 +213,7 @@ function markWordAsKnown(){
 }
 
 document.addEventListener('keydown', function(e){
-    if(e.key == "q"){
-        markWordAsRecognized();
-    }
-    if(e.key == "w"){
-        markWordAsFamiliar();
-    }
-    if(e.key == "e"){
+    if(e.key == "k"){
         markWordAsKnown();
     }
 });

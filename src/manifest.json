@@ -18,9 +18,10 @@
       "css": ["css/styles.css"],
       "js": ["js/rtl_fr.js"],
       "matches": ["https://5minutes.rtl.lu/*"]
-    },{ "css": ["css/styles.css"],
-    "js": ["js/le_monde.js"],
-    "matches": ["https://www.lemonde.fr/*"]
+    },{
+       "css": ["css/styles.css"],
+    "js": ["js/rtl_lu.js"],
+    "matches": ["https://www.rtl.lu/*"]
   }],
   "browser_action":{
     "default_icon" : "images/extension_icon.png",
