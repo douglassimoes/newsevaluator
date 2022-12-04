@@ -16,7 +16,7 @@
    
     "content_scripts": [{
       "css": ["css/styles.css"],
-      "js": ["js/rtl_lu.js"],
+      "js": ["js/rtl_fr.js"],
       "matches": ["https://5minutes.rtl.lu/*"]
     },{ "css": ["css/styles.css"],
     "js": ["js/le_monde.js"],

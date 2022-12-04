@@ -11,6 +11,30 @@ function create_star(){
     return star_element;
 }
 
+function create_rank(rank){
+    var canva_height = "72px";
+    var canva_width = "200px";
+
+    var canvas = document.createElement("CANVAS");
+    var ctx = canvas.getContext("2d");
+    ctx.font = "35px Arial";
+    // ctx.textAlign='center';
+    // ctx.textBaseline='middle';
+    ctx.fillStyle = "grey";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.fillStyle = "black";
+    ctx.fillText(rank+"% known words", 5, 145);
+    const dataUrl = canvas.toDataURL("image/png");
+
+    var rank_address = dataUrl;
+    var rank_element = document.createElement('img');
+    rank_element.src = rank_address;
+    rank_element.style.width = canva_width;
+    rank_element.style.height = canva_height;
+    return rank_element;
+}
+
 
 function star_based_on_rank(div_image,rank){
     var star_size = "24px";
@@ -21,6 +45,10 @@ function star_based_on_rank(div_image,rank){
     var fourth_star = create_star();
     var fifth_star = create_star();
     
+    var rank_element = create_rank(rank)
+    
+    div_image.appendChild(rank_element)
+
     second_star.style.marginLeft = star_size;
     third_star.style.marginLeft = 2*parseInt(star_size,10)+"px";
     fourth_star.style.marginLeft = 3*parseInt(star_size,10)+"px";
@@ -47,6 +75,8 @@ function star_based_on_rank(div_image,rank){
     }else{
         div_image.appendChild(first_star);
     }
+
+
 }
 
 function check_text_against_known_words(article_text,known_words){
@@ -61,7 +91,7 @@ function check_text_against_known_words(article_text,known_words){
 
     var article_percent_known = (article_known_words*100)/article_words.length;
     // console.log("article_percent_known: "+article_known_words.toString() + "::"+ article_words.length.toString()+" result: "+article_percent_known.toString());
-    return article_percent_known.toFixed(2);
+    return article_percent_known.toFixed(0);
 }
 
 function scrape_article(site_content){
